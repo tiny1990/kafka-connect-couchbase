@@ -190,6 +190,11 @@ public class CouchbaseSourceTask extends SourceTask {
                 LOGGER.info("Poll returns {} result(s)", results.size());
                 return results;
             }
+            if (!couchbaseReader.isAlive()) {
+                throw new ConnectException(
+                    String.format(
+                        "CouchbaseReader Thread is dead. Bucket : %s , at : %d",bucket, System.currentTimeMillis()));
+            }
         }
         return results;
     }
